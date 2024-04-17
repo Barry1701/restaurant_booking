@@ -11,4 +11,10 @@ class Booking(models.Model):
     def __str__(self):
         return f"Booking #{self.pk} - {self.date} at {self.time} for {self.number_of_guests} guests"
 
-    
+class TimeSlot(models.Model):
+    date = models.DateField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+
+    def __str__(self):
+        return f" {self.date} - {self.start_time} to {self.end_time}"
