@@ -1,6 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Book a Table</h2>
+    <div id="calendar">
+        <!-- Calendar HTML will be dynamically generated here -->
+    </div>
+</div>
+
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Submit</button>
 </form>
+{% endblock %}
 
+{% block javascript %}
+<script src="{% static 'js/booking_calendar.js' %}"></script>
+{% endblock %}

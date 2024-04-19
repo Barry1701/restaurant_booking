@@ -1,10 +1,15 @@
 # from django.http import HttpResponse
 # from django.shortcuts import render
+from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 from django.views.generic import FormView
 from django.views.generic import ListView
 from django.views.generic import TemplateView
+
+
 
 from .forms import BookingForm
 from .models import Booking
@@ -40,3 +45,31 @@ class BookingListView(LoginRequiredMixin, ListView):
 
 class ThanksView(TemplateView):
     template_name = 'bookings/thanks.html'
+
+def fetch_availability_view(request):
+    # Available dates and time slots from data base
+    availability_data = {
+        'available_dates': ['2024-04-20', '2024-04-21'],
+        'time_slots': {
+            '2024-04-20': ['09:00', '12:00', '18:00'],
+            '2024-04-21': ['11:00', '15:00'],
+        }
+    }
+
+    return JsonResponse(availability_data)
+
+   
+class UserRegistrationView(FormView):
+    template_name = 'registration/authentication.html'
+    form_class = UserCreationForm
+    success_url = reverse_lazy('login')
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
+class UserLoginView(LoginView):
+    template_name = 'registration/authentication.html'
+
+class UserLogoutView(LogoutView):
+    next_page = '/'
