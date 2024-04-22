@@ -1,10 +1,8 @@
 # from django.http import HttpResponse
 # from django.shortcuts import render
+from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
-from django.views.generic import FormView
-from django.views.generic import ListView
-from django.views.generic import TemplateView
 from django.urls import reverse_lazy
 from .forms import BookingForm
 from .models import Booking
@@ -13,7 +11,7 @@ from .models import Booking
 
 
 # Create your views here.
-class BookingFormView(LoginRequiredMixin, FormView):
+class BookingFormView(LoginRequiredMixin, generic.FormView):
     template_name = 'bookings/booking_form.html'
     form_class = BookingForm
     success_url = reverse_lazy('thanks') #redirect to thanks page
@@ -31,14 +29,14 @@ class BookingFormView(LoginRequiredMixin, FormView):
 
 
 
-class BookingListView(LoginRequiredMixin, ListView):
+class BookingListView(LoginRequiredMixin, generic.ListView):
     template_name = 'bookings/booking_list.html'
     context_object_name = 'bookings'
 
     def get_queryset(self):
         return Booking.objects.filter(user=self.request.user)
 
-class ThanksView(TemplateView):
+class ThanksView(generic.TemplateView):
     template_name = 'bookings/thanks.html'
 
 def fetch_availability_view(request):
