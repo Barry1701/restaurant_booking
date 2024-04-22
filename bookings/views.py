@@ -3,6 +3,7 @@
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from .forms import BookingForm
 from .models import Booking
@@ -52,3 +53,11 @@ def fetch_availability_view(request):
     return JsonResponse(availability_data)
 
    
+class HomeView(generic.TemplateView):
+    template_name = 'bookings/home.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('create_booking')
+        else:
+            return redirect(reverse_lazy('account_login'))
