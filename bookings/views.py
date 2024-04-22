@@ -1,16 +1,11 @@
 # from django.http import HttpResponse
 # from django.shortcuts import render
-from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.views import LoginView, LogoutView
-from django.urls import reverse_lazy
+from django.http import JsonResponse
 from django.views.generic import FormView
 from django.views.generic import ListView
 from django.views.generic import TemplateView
-
-
-
+from django.urls import reverse_lazy
 from .forms import BookingForm
 from .models import Booking
 
@@ -59,17 +54,3 @@ def fetch_availability_view(request):
     return JsonResponse(availability_data)
 
    
-class UserRegistrationView(FormView):
-    template_name = 'registration/authentication.html'
-    form_class = UserCreationForm
-    success_url = reverse_lazy('login')
-
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
-
-class UserLoginView(LoginView):
-    template_name = 'registration/authentication.html'
-
-class UserLogoutView(LogoutView):
-    next_page = '/'
