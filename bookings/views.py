@@ -11,6 +11,7 @@ from .models import Booking
 
 
 
+
 # Create your views here.
 class BookingFormView(LoginRequiredMixin, generic.FormView):
     template_name = 'bookings/booking_form.html'
@@ -54,7 +55,7 @@ def fetch_availability_view(request):
 
    
 class HomeView(generic.TemplateView):
-    template_name = 'bookings/home.html'
+    template_name = 'bookings/booking_form.html'
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:

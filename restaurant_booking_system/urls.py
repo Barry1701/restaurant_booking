@@ -19,9 +19,10 @@ from django.urls import path, include
 from bookings.views import HomeView
 
 
+
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('accounts/', include('allauth.urls')),
     path('admin/', admin.site.urls),
-    path('bookings/', include('bookings.urls'), name='bookings-urls'),
+    path('bookings/', include('bookings.urls')),
 ]
